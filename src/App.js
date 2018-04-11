@@ -9,9 +9,24 @@ class App extends Component {
       cryptos: []
     };
   }
+  componentDidMount() {
+    axios.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,IOT&tsyms=USD')
+      .then(res=>{
+        const cryptos = res.data;
+        console.log(cryptos);
+        this.setState({cryptos: cryptos});
+      })
+  }
   render() {
     return(
-      <div>hello</div>
+      <div className="App">
+        {Object.keys(this.state.cryptos).map((key) => (
+          <div key={key}>
+            {key}
+            {this.state.cryptos[key].USD}
+          </div>
+        ))}
+      </div>
     );
   }
 }
