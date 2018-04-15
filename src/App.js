@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios';
+import axios from './crypto-compare.js';
 
 class App extends Component {
   constructor(props) {
@@ -10,20 +10,26 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    axios.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,IOT&tsyms=USD')
-      .then(res=>{
-        const cryptos = res.data;
-        console.log(cryptos);
+    axios.get('data/coin/generalinfo?fsyms=BTC,MLN,DASH&tsym=USD')
+      .then(response => {
+        const cryptos = response.data.Data;
         this.setState({cryptos: cryptos});
+        console.log(cryptos);
+      })
+      .catch(error => {
+        console.log(error);
       })
   }
   render() {
     return(
       <div className="App">
         {Object.keys(this.state.cryptos).map((key) => (
-          <div key={key}>
-            {key}
-            {this.state.cryptos[key].USD}
+          <div id="crypto-container" className="container">
+            <span className="left">
+              <img src={'https://www.cryptocompare.com' + this.state.cryptos[key].CoinInfo.ImageUrl} className="crypto-img" />
+              {this.state.cryptos[key].CoinInfo.Name}
+              </span>
+            <span className="right">{this.state.cryptos[key].CoinInfo.FullName}</span>
           </div>
         ))}
       </div>
