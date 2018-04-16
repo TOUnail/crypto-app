@@ -6,30 +6,36 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cryptos: []
-    };
+      crypto: []
+    }
   }
   componentDidMount() {
-    axios.get('data/coin/generalinfo?fsyms=BTC,MLN,DASH&tsym=USD')
-      .then(response => {
-        const cryptos = response.data.Data;
-        this.setState({cryptos: cryptos});
-        console.log(cryptos);
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    Promise.all([
+      axios.get('data/coin/generalinfo?fsyms=BTC,MLN,DASH&tsym=USD'),
+      axios.get('data/pricemulti?fsyms=BTC,MLN,DASH&tsyms=USD')
+    ])
+    .then(([generalInfo, pricemulti]) => {
+      let cryptoData = generalInfo.data.Data.concat(pricemulti.data);
+      this.setState({
+        crypto:cryptoData,
+      });
+      console.log(this.state.crypto);
+      console.log(this.state.crypto[3]);
+    });
+    
   }
   render() {
     return(
       <div className="App">
-        {Object.keys(this.state.cryptos).map((key) => (
-          <div id="crypto-container" className="container">
+        {Object.keys(this.state.crypto.slice(0,-1)).map((key) => (
+          <div id="crypto-container" className="container" key={key}>
             <span className="left">
-              <img src={'https://www.cryptocompare.com' + this.state.cryptos[key].CoinInfo.ImageUrl} className="crypto-img" />
-              {this.state.cryptos[key].CoinInfo.Name}
-              </span>
-            <span className="right">{this.state.cryptos[key].CoinInfo.FullName}</span>
+              {this.state.crypto[key].CoinInfo.Name}
+              <img src={'https://www.cryptocompare.com' + this.state.crypto[key].CoinInfo.ImageUrl} alt="" className="crypto-img" />
+              
+            </span>
+            <span className="right">
+            </span>
           </div>
         ))}
       </div>
