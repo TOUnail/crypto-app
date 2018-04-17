@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Price from './components/Price/Price';
 import axios from './crypto-compare.js';
 
 class App extends Component {
@@ -11,19 +12,19 @@ class App extends Component {
   }
   componentDidMount() {
     Promise.all([
+      //https://min-api.cryptocompare.com/data/top/exchanges/full?fsym=BTC&tsym=USD
       axios.get('data/coin/generalinfo?fsyms=BTC,MLN,DASH&tsym=USD'),
-      axios.get('data/pricemulti?fsyms=BTC,MLN,DASH&tsyms=USD')
+      axios.get('data/pricemultifull?fsyms=BTC,MLN,DASH&tsyms=USD')
     ])
     .then(([generalInfo, pricemulti]) => {
       let cryptoData = generalInfo.data.Data.concat(pricemulti.data);
       this.setState({
-        crypto:cryptoData,
+        crypto:cryptoData
       });
       console.log(this.state.crypto);
-      console.log(this.state.crypto[3]);
     });
-    
   }
+
   render() {
     return(
       <div className="App">
@@ -32,9 +33,10 @@ class App extends Component {
             <span className="left">
               {this.state.crypto[key].CoinInfo.Name}
               <img src={'https://www.cryptocompare.com' + this.state.crypto[key].CoinInfo.ImageUrl} alt="" className="crypto-img" />
-              
             </span>
             <span className="right">
+              {this.state.crypto.slice(-1)[0].RAW.BTC.USD.FROMSYMBOL}
+              <Price />
             </span>
           </div>
         ))}
