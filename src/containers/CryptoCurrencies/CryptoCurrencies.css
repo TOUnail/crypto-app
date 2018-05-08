@@ -3,6 +3,11 @@ body {
 	padding: 50px;
 }
 
+a {
+	text-decoration: none;
+	color: #333;
+}
+
 .container {
 	background:white;
 	width: 70%;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import './CryptoCurrencies.css';
 import axios from '../../crypto-compare.js';
 
@@ -9,7 +10,7 @@ class CryptoCurrencies extends Component {
     super(props);
     this.state = {
       cryptos: {},
-      teststate: {}
+      //teststate: {}
     }
   }
   /*fetchResult() {
@@ -55,18 +56,20 @@ class CryptoCurrencies extends Component {
     return(
       <div className="App">
         {Object.keys(this.state.cryptos).map((key) => (
-          <div id="crypto-container" className="container" key={key}>
-            <div className="coin-image">
-              <img src={'https://www.cryptocompare.com' + this.state.cryptos[key].CoinInfo.ImageUrl} alt="" className="crypto-img" />
+          <Link to={'/coin/' + this.state.cryptos[key].CoinInfo.Name} params={this.state.cryptos[key].CoinInfo.Name} key={this.state.cryptos[key].CoinInfo.Name}>
+            <div id="crypto-container" className="container">
+              <div className="coin-image">
+                <img src={'https://www.cryptocompare.com' + this.state.cryptos[key].CoinInfo.ImageUrl} alt="" className="crypto-img" />
+              </div>
+              <div className="coin-name">
+                <p><strong>{this.state.cryptos[key].CoinInfo.Name}</strong></p>
+                <p>{this.state.cryptos[key].CoinInfo.FullName}</p>
+              </div>
+              <div className="right">
+                <Price title={this.state.cryptos[key].CoinInfo.USD.toFixed(2)} />
+              </div>
             </div>
-            <div className="coin-name">
-              <p><strong>{this.state.cryptos[key].CoinInfo.Name}</strong></p>
-              <p>{this.state.cryptos[key].CoinInfo.FullName}</p>
-            </div>
-            <div className="right">
-              <Price title={this.state.cryptos[key].CoinInfo.USD.toFixed(2)} />
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     );
