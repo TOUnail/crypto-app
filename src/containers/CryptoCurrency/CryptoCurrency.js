@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from '../../crypto-compare.js';
+import {VictoryLine,VictoryChart,VictoryTheme} from 'victory';
 
 class CryptoCurrency extends Component {
 	constructor(props) {
@@ -10,11 +11,14 @@ class CryptoCurrency extends Component {
 	    }
 	}
 	componentDidMount(props) {
-		console.log('props:', this.props);
+		//console.log('props:', this.props);
 		axios.get('data/histominute?fsym='+ this.props.match.params.id +'&tsym=USD&limit=10')
 			.then(res=>{
-				const cryptoInfo = res.data;
-				console.log(cryptoInfo);
+				console.log(res.data)
+				const cryptoInfo = res.data.Data;
+				this.setState({
+					cryptoInfo: cryptoInfo
+				})
 			})
 	    /*axios.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms='+{this.props}+'&tsyms=USD')
 	      .then(res => {
@@ -24,7 +28,18 @@ class CryptoCurrency extends Component {
 	}
 	render() {
 		return (
-			<div>{this.props.match.params.id}</div>
+			<div>
+				{this.props.match.params.id}
+				<div>
+					<VictoryChart theme={VictoryTheme.material}>
+						<VictoryLine
+							data={this.state.cryptoInfo}
+							x="time"
+							y="high"
+						/>
+					</VictoryChart>
+				</div>
+			</div>
 		);
 	}
 }
