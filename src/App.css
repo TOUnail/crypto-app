@@ -1,33 +1,24 @@
 body {
 	background: #f1f1f1;
-	padding: 50px;
+	padding: 15px;
 }
 
-.container {
-	background:white;
-	width: 70%;
-	margin: 0 auto 4px auto;
-	padding: 1em;
-	box-shadow: 1px 1px 0 lightgrey;
-	display: flex;
-	align-items: center;
+/* Small only */
+@media screen and (max-width: 39.9375em) {}
+
+/* Medium and up */
+@media screen and (min-width: 40em) {
+	body {
+		background: #f1f1f1;
+		padding: 50px;
+	}
 }
 
-.crypto-img {
-	width:35px;
-	height:auto;
-	display: block;
-	margin: 0 auto 5px;
-}
+/* Medium only */
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {}
 
-.coin-image {
-}
+/* Large and up */
+@media screen and (min-width: 64em) {}
 
-.coin-name p {
-	margin: 0;
-}
-
-.right {
-	text-align: right;
-	margin-left: auto;
-}
+/* Large only */
+@media screen and (min-width: 64em) and (max-width: 74.9375em) {}

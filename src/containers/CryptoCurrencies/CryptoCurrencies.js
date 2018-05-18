@@ -56,7 +56,13 @@ class CryptoCurrencies extends Component {
     return(
       <div className="App">
         {Object.keys(this.state.cryptos).map((key) => (
-          <Link to={'/coin/' + this.state.cryptos[key].CoinInfo.Name} params={this.state.cryptos[key].CoinInfo.Name} key={this.state.cryptos[key].CoinInfo.Name}>
+          <Link
+            to={{
+              pathname: '/coin/' + this.state.cryptos[key].CoinInfo.Name
+            }}
+            className="currency-link"
+            key={this.state.cryptos[key].CoinInfo.Name}
+            >
             <div id="crypto-container" className="container">
               <div className="coin-image">
                 <img src={'https://www.cryptocompare.com' + this.state.cryptos[key].CoinInfo.ImageUrl} alt="" className="crypto-img" />

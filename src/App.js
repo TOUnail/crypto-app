@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-
+import './App.css';
 import CryptoCurrencies from './containers/CryptoCurrencies/CryptoCurrencies';
 import CryptoCurrency from './containers/CryptoCurrency/CryptoCurrency';
 
