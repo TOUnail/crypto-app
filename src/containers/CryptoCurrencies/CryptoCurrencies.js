@@ -9,8 +9,7 @@ class CryptoCurrencies extends Component {
 	constructor(props) {
     super(props);
     this.state = {
-      cryptos: {},
-      //teststate: {}
+      cryptos: {}
     }
   }
   /*fetchResult() {
@@ -48,37 +47,43 @@ class CryptoCurrencies extends Component {
       this.setState({
         cryptos: cryptoData
       });
-    });
+    })
+    .catch(error => console.log(error));
     //this.fetchResult();
   }
 
   render() {
-    return(
-      <div className="App">
-        {Object.keys(this.state.cryptos).map((key) => (
-          <Link
-            to={{
-              pathname: '/coin/' + this.state.cryptos[key].CoinInfo.Name
-            }}
-            className="currency-link"
-            key={this.state.cryptos[key].CoinInfo.Name}
-            >
-            <div id="crypto-container" className="container">
-              <div className="coin-image">
-                <img src={'https://www.cryptocompare.com' + this.state.cryptos[key].CoinInfo.ImageUrl} alt="" className="crypto-img" />
+    const data = this.state.cryptos;
+    if (data) {
+      return(
+        <div className="App">
+          {Object.keys(this.state.cryptos).map((key) => (
+            <Link
+              to={{
+                pathname: '/coin/' + this.state.cryptos[key].CoinInfo.Name
+              }}
+              className="currency-link"
+              key={this.state.cryptos[key].CoinInfo.Name}
+              >
+              <div id="crypto-container" className="container">
+                <div className="coin-image">
+                  <img src={'https://www.cryptocompare.com' + this.state.cryptos[key].CoinInfo.ImageUrl} alt="" className="crypto-img" />
+                </div>
+                <div className="coin-name">
+                  <p><strong>{this.state.cryptos[key].CoinInfo.Name}</strong></p>
+                  <p>{this.state.cryptos[key].CoinInfo.FullName}</p>
+                </div>
+                <div className="right">
+                  <Price title={this.state.cryptos[key].CoinInfo.USD.toFixed(2)} />
+                </div>
               </div>
-              <div className="coin-name">
-                <p><strong>{this.state.cryptos[key].CoinInfo.Name}</strong></p>
-                <p>{this.state.cryptos[key].CoinInfo.FullName}</p>
-              </div>
-              <div className="right">
-                <Price title={this.state.cryptos[key].CoinInfo.USD.toFixed(2)} />
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-    );
+            </Link>
+          ))}
+        </div>
+      );
+    } else {
+      return 'Is loading'
+    }
   }
 }
 
