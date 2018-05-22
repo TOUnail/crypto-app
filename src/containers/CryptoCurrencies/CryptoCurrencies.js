@@ -29,8 +29,8 @@ class CryptoCurrencies extends Component {
   }}*/
   componentDidMount() {
     Promise.all([
-      axios.get('data/coin/generalinfo?fsyms=BTC,ETH,EOS,BCH,XRP,LTC,TRX,ETC,IOT,NEO&tsym=USD'),
-      axios.get('data/pricemulti?fsyms=BTC,ETH,EOS,BCH,XRP,LTC,TRX,ETC,IOT,NEO&tsyms=USD')
+      axios.get('data/coin/generalinfo?fsyms=BTC,ETH,XRP,BCH,EOS,LTC,ADA,XLM,TRX,IOT&tsym=USD'),
+      axios.get('data/pricemulti?fsyms=BTC,ETH,XRP,BCH,EOS,LTC,ADA,XLM,TRX,IOT&tsyms=USD')
     ])
     .then(([generalInfo, pricemulti]) => {
       let cryptoData = generalInfo.data.Data;

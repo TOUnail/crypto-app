@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './CryptoCurrency.css';
+import Price from '../../../components/Price/Price';
 import Loader from '../../../components/Loader/Loader';
 import axios from '../../../crypto-compare.js';
 import {VictoryLine,VictoryChart,VictoryAxis,VictoryTheme} from 'victory';
@@ -69,16 +70,17 @@ class CryptoCurrency extends Component {
 		if (data) { 
 			return (
 				<div className="currency-container">
-					<div className="container">
-						<div className="coin-image">
-							<img alt={this.state.cryptoSingleInfo.CoinInfo.Name} src={'https://www.cryptocompare.com' + this.state.cryptoSingleInfo.CoinInfo.ImageUrl} />
+					<div className="container-header">
+						<div className="currency-image">
+							<img className="currency-img" alt={this.state.cryptoSingleInfo.CoinInfo.Name} src={'https://www.cryptocompare.com' + this.state.cryptoSingleInfo.CoinInfo.ImageUrl} />
 						</div>
-						<div className="coin-name">
-							<p><strong>{this.props.match.params.id}</strong></p>
+						<div className="currency-info">
+							<p><strong>{this.state.cryptoSingleInfo.CoinInfo.FullName} <span className="currency-abbr">({this.props.match.params.id})</span></strong><br />
+							$<Price title={this.state.cryptoSinglePrice.USD.toFixed(2)} /></p>
 						</div>
 					</div>
 					<div className="chart">
-						<VictoryChart theme={VictoryTheme.material} height={250} domainPadding={{y:50}} style={{ parent: { maxWidth: "100%" } }}>
+						<VictoryChart theme={VictoryTheme.material} height={250} domainPadding={{y:50}}>
 							<VictoryAxis
 								tickFormat = {(y)=>(this.timeConverter(y))}
 								tickCount = {10}
