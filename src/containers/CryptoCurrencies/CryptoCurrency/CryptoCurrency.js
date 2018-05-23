@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './CryptoCurrency.css';
 import Price from '../../../components/Price/Price';
+import Percentage from '../../../components/Percentage/Percentage';
 import Loader from '../../../components/Loader/Loader';
 import axios from '../../../crypto-compare.js';
 import {VictoryLine,VictoryChart,VictoryAxis,VictoryTheme} from 'victory';
@@ -17,13 +18,14 @@ class CryptoCurrency extends Component {
 	componentDidMount(props) {
 		Promise.all([
 	      axios.get('data/coin/generalinfo?fsyms='+ this.props.match.params.id +'&tsym=USD'),
-	      axios.get('data/price?fsym='+ this.props.match.params.id +'&tsyms=USD'),
+	      axios.get('data/pricemultifull?fsyms='+ this.props.match.params.id +'&tsyms=USD'),
 	      axios.get('data/histohour?fsym='+ this.props.match.params.id +'&tsym=USD&limit=10')
 	    ])
     	.then(([singleGeneralInfo, singlePrice, priceHist]) => {
     		let cryptoData = singleGeneralInfo.data.Data[0];
     		let cryptoPrice = singlePrice.data;
     		let cryptoHist = priceHist.data.Data;
+    		console.log(cryptoPrice);
     		this.setState({
 				cryptoSingleInfo: cryptoData,
 				cryptoSinglePrice: cryptoPrice,
@@ -66,7 +68,7 @@ class CryptoCurrency extends Component {
 		return time;
 	}
 	render() {
-		const data = this.state.cryptoSingleInfo;
+		const data = this.state.cryptoSinglePrice;
 		if (data) { 
 			return (
 				<div className="currency-container">
@@ -75,8 +77,9 @@ class CryptoCurrency extends Component {
 							<img className="currency-img" alt={this.state.cryptoSingleInfo.CoinInfo.Name} src={'https://www.cryptocompare.com' + this.state.cryptoSingleInfo.CoinInfo.ImageUrl} />
 						</div>
 						<div className="currency-info">
-							<p><strong>{this.state.cryptoSingleInfo.CoinInfo.FullName} <span className="currency-abbr">({this.props.match.params.id})</span></strong><br />
-							$<Price title={this.state.cryptoSinglePrice.USD.toFixed(2)} /></p>
+							<p className="currency-name"><strong>{this.state.cryptoSingleInfo.CoinInfo.FullName} <span className="currency-abbr">({this.props.match.params.id})</span></strong></p>
+							<Price title={this.state.cryptoSinglePrice.DISPLAY[this.props.match.params.id].USD.PRICE} />
+							<Percentage percent={this.state.cryptoSinglePrice.DISPLAY[this.props.match.params.id].USD.CHANGEPCT24HOUR} />
 						</div>
 					</div>
 					<div className="chart">
