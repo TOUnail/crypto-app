@@ -67,6 +67,9 @@ class CryptoCurrency extends Component {
 		let time =  + hourFormatted + ':' + min + ' ' + meridian + '\n' + month + ' ' + date + ', ' + year;
 		return time;
 	}
+	formattedNumber(x){
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	render() {
 		const data = this.state.cryptoSinglePrice;
 		if (data) { 
@@ -78,9 +81,29 @@ class CryptoCurrency extends Component {
 						</div>
 						<div className="currency-info">
 							<p className="currency-name"><strong>{this.state.cryptoSingleInfo.CoinInfo.FullName} <span className="currency-abbr">({this.props.match.params.id})</span></strong></p>
-							<Price title={this.state.cryptoSinglePrice.DISPLAY[this.props.match.params.id].USD.PRICE} />
-							<Percentage percent={this.state.cryptoSinglePrice.DISPLAY[this.props.match.params.id].USD.CHANGEPCT24HOUR} />
+							$<Price title={this.state.cryptoSinglePrice.RAW[this.props.match.params.id].USD.PRICE.toFixed(2)} />
+							<Percentage percent={this.state.cryptoSinglePrice.RAW[this.props.match.params.id].USD.CHANGEPCT24HOUR} />
 						</div>
+					</div>
+					<div className="currency-table">
+						<table>
+							<thead>
+								<tr>
+									<th>Market Cap</th>
+									<th>Circulating Supply</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										{this.state.cryptoSinglePrice.RAW[this.props.match.params.id].USD.MKTCAP.toLocaleString(navigator.language, { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}
+									</td>
+									<td>
+										{this.state.cryptoSinglePrice.RAW[this.props.match.params.id].USD.SUPPLY.toLocaleString(navigator.language, { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					<div className="chart">
 						<VictoryChart theme={VictoryTheme.material} height={250} domainPadding={{y:50}}>

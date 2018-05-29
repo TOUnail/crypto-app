@@ -74,7 +74,7 @@ class CryptoCurrencies extends Component {
                   <p>{this.state.cryptos[key].CoinInfo.FullName}</p>
                 </div>
                 <div className="right">
-                  $ <Price title={this.state.cryptos[key].CoinInfo.USD.toFixed(2)} />
+                  $<Price title={this.state.cryptos[key].CoinInfo.USD.toFixed(2)} />
                 </div>
               </div>
             </Link>
