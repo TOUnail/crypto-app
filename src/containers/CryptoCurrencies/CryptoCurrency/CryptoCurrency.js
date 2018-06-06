@@ -85,12 +85,13 @@ class CryptoCurrency extends Component {
 							<Percentage percent={this.state.cryptoSinglePrice.RAW[this.props.match.params.id].USD.CHANGEPCT24HOUR} />
 						</div>
 					</div>
-					<div className="currency-table">
-						<table>
+					<div className="currency-data">
+						<table className="currency-table">
 							<thead>
 								<tr>
 									<th>Market Cap</th>
 									<th>Circulating Supply</th>
+									<th>Volume (24hr)</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -100,6 +101,9 @@ class CryptoCurrency extends Component {
 									</td>
 									<td>
 										{this.state.cryptoSinglePrice.RAW[this.props.match.params.id].USD.SUPPLY.toLocaleString(navigator.language, { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}
+									</td>
+									<td>
+										{this.state.cryptoSinglePrice.RAW[this.props.match.params.id].USD.VOLUME24HOURTO.toLocaleString(navigator.language, { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}
 									</td>
 								</tr>
 							</tbody>

@@ -21,6 +21,25 @@
 	color: #999;
 }
 
+.currency-data {
+	width: 90%;
+	margin: 3px auto 0;
+	padding: 1em;
+	background: white;
+	box-shadow: 1px 1px 0 lightgrey;
+}
+
+.currency-table {
+	border: 1px solid #ccc;
+	text-align: center;
+}
+.currency-table>thead>tr>th {
+	padding: 0.5em 0.5em 0;
+}
+.currency-table>tbody>tr>td {
+	padding: 0.5em;
+}
+
 /* Small only */
 @media screen and (max-width: 39.9375em) {
 }
